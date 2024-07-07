@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.mallapi.domain.Product;
+import org.zerock.mallapi.dto.PageRequestDTO;
+import org.zerock.mallapi.dto.PageResponseDTO;
+import org.zerock.mallapi.dto.ProductDTO;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -94,6 +97,13 @@ public class ProductRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
         Page<Object[]> result = productRepository.selectList(pageable);
         result.getContent().forEach(arr -> log.info(Arrays.toString(arr)));
+    }
+
+    @Test
+    public void testSearch() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+        PageResponseDTO<ProductDTO> result = productRepository.searchList(pageRequestDTO);
+        log.info(result);
     }
 
 }
